@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="620.0" minWidth="826.0" prefHeight="620.0" prefWidth="826.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ViewFifoController">
+<AnchorPane minHeight="620.0" minWidth="826.0" prefHeight="620.0" prefWidth="826.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.planners.controller.ViewFifoController">
    <children>
       <Accordion fx:id="accordion" layoutX="33.0" layoutY="58.0" prefHeight="540.0" prefWidth="758.0" AnchorPane.leftAnchor="33.0" AnchorPane.rightAnchor="35.0">
         <panes>

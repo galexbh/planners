@@ -1,9 +1,9 @@
-package application;
+package com.unah.planners.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import classes.Process;
+import com.unah.planners.classes.Process ;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -41,9 +41,10 @@ public class ViewFifoController implements Initializable {
     private ObservableList<Process> contentTable;
     private ObservableList<Integer> contentComboBox;
     private ObservableList<String> processes;
-    
+
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {		
+	public void initialize(URL arg0, ResourceBundle arg1) {
+
 		instantiateObservableList();
 		chargeComboBoxNumerico(contentComboBox,3);
 //		enlazarLista();
@@ -52,7 +53,7 @@ public class ViewFifoController implements Initializable {
 		lstProcesses.setItems(processes);
 		cboTimeArrival.setItems(contentComboBox);
 	}
-	
+
 	public void instantiateObservableList() {
 		contentComboBox = FXCollections.observableArrayList();
 		contentTable = FXCollections.observableArrayList();

@@ -1,4 +1,4 @@
-package classes;
+package com.unah.planners.classes;
 
 import javafx.collections.ObservableList;
 
