@@ -126,7 +126,9 @@ public class RoundRobinController implements Initializable {
                         time += quantum;
 
                         burstTimeTemp.add(index, burstTimeTemp.get(index) - quantum);
-                    } else {
+                    }
+
+                    if (burstTimeTemp.get(index) <= quantum) {
                         time = time + burstTimeTemp.get(index);
 
                         waitingTime.add(time - burstTimeTemp.get(index));
