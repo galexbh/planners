@@ -5,14 +5,14 @@ public class ProcessSRT {
     private int arrivalTime;
     private int serviceTime;
 
-    private int position;
+    private int positionInTable;
 
     public int getPosition() {
-        return position;
+        return positionInTable;
     }
 
     public void setPosition(int position) {
-        this.position = position;
+        this.positionInTable = position;
     }
 
 
