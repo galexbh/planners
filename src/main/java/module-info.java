@@ -8,7 +8,7 @@ module com.unah.planners {
 
 
     opens com.unah.planners to javafx.fxml, javafx.base;
-    opens com.unah.planners.classes to javafx.base;
+    opens com.unah.planners.process to javafx.base;
     exports com.unah.planners;
     exports com.unah.planners.controller;
     opens com.unah.planners.controller to javafx.base, javafx.fxml;

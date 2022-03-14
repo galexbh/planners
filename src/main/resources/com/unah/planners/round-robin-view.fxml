@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.planners.controller.RoundRobinController">
+<VBox alignment="CENTER" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: #bfdbf7;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.planners.controller.RoundRobinController">
    <HBox alignment="CENTER" prefHeight="237.0" prefWidth="600.0">
       <VBox.margin>
          <Insets left="40.0" right="40.0" />
@@ -97,25 +97,31 @@
          </columns>
       </TableView>
    </HBox>
-   <VBox alignment="CENTER_LEFT" prefHeight="93.0" prefWidth="600.0">
+   <VBox alignment="CENTER" prefHeight="93.0" prefWidth="600.0">
       <VBox.margin>
          <Insets left="40.0" right="40.0" />
       </VBox.margin>
-      <Label alignment="CENTER" contentDisplay="RIGHT" text="Average Waiting Time        ">
+      <Label alignment="CENTER" contentDisplay="RIGHT" text="Average Waiting Time:   ">
          <graphic>
-            <TextField fx:id="txfAverageWaitingTime" disable="true" editable="false" />
+            <TextField fx:id="txfAverageWaitingTime" alignment="CENTER" disable="true" editable="false" />
          </graphic>
          <VBox.margin>
-            <Insets left="40.0" />
+            <Insets right="120.0" />
          </VBox.margin>
+         <font>
+            <Font name="JetBrains Mono ExtraBold ExtBd Nerd Font Complete" size="13.0" />
+         </font>
       </Label>
-      <Label alignment="CENTER" contentDisplay="RIGHT" text="Average Turnaround Time">
+      <Label alignment="CENTER" contentDisplay="RIGHT" text="Average Turnaround Time:">
          <graphic>
-            <TextField fx:id="txfAverageTurnaroundTime" disable="true" editable="false" />
+            <TextField fx:id="txfAverageTurnaroundTime" alignment="CENTER" disable="true" editable="false" />
          </graphic>
          <VBox.margin>
-            <Insets left="40.0" top="10.0" />
+            <Insets right="120.0" top="10.0" />
          </VBox.margin>
+         <font>
+            <Font name="JetBrains Mono ExtraBold ExtBd Nerd Font Complete" size="13.0" />
+         </font>
       </Label>
    </VBox>
 </VBox>

@@ -82,7 +82,7 @@
          </VBox.margin>
          <Label contentDisplay="TOP" text="FCFS">
             <graphic>
-               <Button fx:id="btnFifo" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#onOpenForm" style="-fx-background-color: #353535;" text="1" textAlignment="CENTER">
+               <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#onOpenForm" style="-fx-background-color: #353535;" text="1" textAlignment="CENTER">
                   <graphic>
                      <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                         <Image url="@img/fifo.png" />
@@ -99,7 +99,7 @@
          </Label>
          <Label contentDisplay="TOP" text="Round Robin" textAlignment="CENTER">
             <graphic>
-               <Button fx:id="btnRoundRobin" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#onOpenForm" style="-fx-background-color: #353535;" text="2">
+               <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#onOpenForm" style="-fx-background-color: #353535;" text="2">
                   <padding>
                      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                   </padding>
@@ -121,15 +121,13 @@
          </VBox.margin>
          <Label contentDisplay="TOP" text="SPN">
             <graphic>
-               <Button fx:id="btnSPN" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#onOpenForm" style="-fx-background-color: #353535;" text="3" textAlignment="CENTER">
+               <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#onOpenForm" style="-fx-background-color: #353535;" text="3" textAlignment="CENTER">
                   <padding>
                      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                   </padding>
                   <graphic>
                      <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@img/Shortest.png" />
-                        </image>
+                        <Image url="@img/Shortest.png" />
                      </ImageView>
                   </graphic>
                </Button>
@@ -145,7 +143,7 @@
          </VBox.margin>
          <Label contentDisplay="TOP" text="SRT">
             <graphic>
-               <Button fx:id="btnSRT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#onOpenForm" style="-fx-background-color: #353535;" text="4">
+               <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#onOpenForm" style="-fx-background-color: #353535;" text="4">
                   <padding>
                      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                   </padding>
@@ -162,7 +160,7 @@
          </Label>
          <Label contentDisplay="TOP" style="-fx-background-color: FFFFFF;" text="HRRN">
             <graphic>
-               <Button fx:id="btnHRRN" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#onOpenForm" style="-fx-background-color: #353535;" text="5">
+               <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#onOpenForm" style="-fx-background-color: #353535;" text="5">
                   <padding>
                      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                   </padding>
