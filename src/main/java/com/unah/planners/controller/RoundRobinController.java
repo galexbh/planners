@@ -10,6 +10,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
+import java.util.ArrayList;
+
 import java.util.ResourceBundle;
 
 public class RoundRobinController implements Initializable {
@@ -49,9 +51,7 @@ public class RoundRobinController implements Initializable {
     @FXML
     private TableColumn<RoundRobinModel, Integer> waitingTime;
 
-    ObservableList<RoundRobinModel> list = FXCollections.observableArrayList(
-            new RoundRobinModel(1, 1, 1, 1)
-    );
+    ObservableList<RoundRobinModel> list = FXCollections.observableArrayList();
 
     Alert alert = new Alert(Alert.AlertType.NONE);
 
@@ -71,29 +71,87 @@ public class RoundRobinController implements Initializable {
 
     @FXML
     void onComputeAlgorithm(ActionEvent event) {
+        ArrayList<Integer> processes = new ArrayList<>();
+        ArrayList<Integer> burstTime = new ArrayList<>();
 
-        for (int index = 0; index <= lsvProcessBurstTime.getItems().size() - 1; index++){
-            lsvProcessBurstTime.getItems().get(index);
+        for (int index = 0; index <= lsvProcessBurstTime.getItems().size() - 1; index++) {
+            processes.add(lsvProcess.getItems().get(index));
+            burstTime.add(lsvProcessBurstTime.getItems().get(index));
         }
 
-        list.add(new RoundRobinModel(1,1,1,1));
-
-
-
+        findAverageTime(processes, burstTime, cbxQuantum.getValue());
         RoundRobinTable.setItems(list);
+    }
 
+    private void findAverageTime(ArrayList<Integer> processes, ArrayList<Integer> burstTime, Integer quantum) {
+        int averageWaitingTime = 0, averageTurnaroundTime = 0;
+
+        ArrayList<Integer> waitingTime = findWaitingTime(processes, burstTime, quantum);
+        ArrayList<Integer> turnAroundTime = findTurnAroundTime(processes, waitingTime);
+
+        for (int index = 0; index < processes.size(); index++) {
+            list.add(new RoundRobinModel(processes.get(index), burstTime.get(index), waitingTime.get(index), turnAroundTime.get(index)));
+            averageWaitingTime += waitingTime.get(index);
+            averageTurnaroundTime += turnAroundTime.get(index);
+        }
+
+        txfAverageWaitingTime.setText(String.valueOf((float) averageWaitingTime / (float) processes.size()));
+        txfAverageTurnaroundTime.setText(String.valueOf((float) averageTurnaroundTime / (float) processes.size()));
+    }
+
+    private ArrayList<Integer> findTurnAroundTime(ArrayList<Integer> processes, ArrayList<Integer> waitingTime) {
+        ArrayList<Integer> turnAroundTime = new ArrayList<>();
+        for (int index = 0; index < processes.size(); index++) {
+            turnAroundTime.add(processes.get(index) + waitingTime.get(index));
+        }
+        return turnAroundTime;
+    }
+
+    private ArrayList<Integer> findWaitingTime(ArrayList<Integer> processes, ArrayList<Integer> burstTime, Integer quantum) {
+        //we assume that the arrival times are 0, so the lap and finish times are the same.
+        int time = 0;
+        ArrayList<Integer> waitingTime = new ArrayList<>();
+
+        ArrayList<Integer> burstTimeTemp = new ArrayList<>(burstTime);
+
+        while (true) {
+            boolean pendingProcess = true;
+
+            for (int index = 0; index < processes.size(); index++) {
+
+                if (burstTimeTemp.get(index) > 0) {
+                    pendingProcess = false;
+
+                    if (burstTimeTemp.get(index) > quantum) {
+                        time += quantum;
+
+                        burstTimeTemp.add(index, burstTimeTemp.get(index) - quantum);
+                    } else {
+                        time = time + burstTimeTemp.get(index);
+
+                        waitingTime.add(time - burstTimeTemp.get(index));
+
+                        burstTimeTemp.add(index, 0);
+                    }
+                }
+            }
+
+            if (pendingProcess)
+                return waitingTime;
+        }
     }
 
     @FXML
     void onClear(ActionEvent event) {
         try {
-            for (int index = 0; index <= lsvProcessBurstTime.getItems().size(); index++) {
-                lsvProcess.getItems().remove(index);
-                lsvProcessBurstTime.getItems().remove(index);
-            }
-
+            lsvProcess.getItems().clear();
+            lsvProcessBurstTime.getItems().clear();
             RoundRobinTable.getItems().clear();
-        } catch (Exception e){
+            txfProcess.setText("");
+            txfProcessBurst.setText("");
+            txfAverageWaitingTime.setText("");
+            txfAverageTurnaroundTime.setText("");
+        } catch (Exception e) {
             alert.setAlertType(Alert.AlertType.INFORMATION);
             alert.setContentText("Enter values to clean");
             alert.show();
