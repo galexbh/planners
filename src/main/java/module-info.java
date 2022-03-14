@@ -11,5 +11,6 @@ module com.unah.planners {
     opens com.unah.planners.classes to javafx.base;
     exports com.unah.planners;
     exports com.unah.planners.controller;
-    opens com.unah.planners.controller to javafx.fxml;
+    opens com.unah.planners.controller to javafx.base, javafx.fxml;
+    opens com.unah.planners.model;
 }
