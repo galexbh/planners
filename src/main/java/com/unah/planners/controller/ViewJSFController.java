@@ -1,9 +1,9 @@
-package application;
+package com.unah.planners.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import classes.Process;
+import com.unah.planners.classes.Process;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

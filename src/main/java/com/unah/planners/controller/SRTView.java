@@ -1,6 +1,5 @@
 package com.unah.planners.controller;
 
-import com.unah.planners.classes.Process;
 import com.unah.planners.classes.ProcessSRT;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
