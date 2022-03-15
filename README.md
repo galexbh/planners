@@ -1,4 +1,4 @@
-# Memory Management Emulators
+# Short-term Planners
 
 UNAH (Autonomous University of Honduras). Project for the **Operating Systems II** class.
 
