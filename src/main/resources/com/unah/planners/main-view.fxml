@@ -1,16 +1,180 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.unah.planners.controller.MainController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+<GridPane prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.planners.controller.MainController">
+   <columnConstraints>
+      <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="56.0" />
+      <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="64.0" prefWidth="100.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <VBox alignment="CENTER" prefHeight="800.0" prefWidth="430.0" style="-fx-background-color: #284b63;" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+      <Label text="Planners" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="JetBrains Mono ExtraBold ExtBd Nerd Font Complete" size="40.0" />
+         </font>
+         <VBox.margin>
+            <Insets left="40.0" right="40.0" />
+         </VBox.margin>
+      </Label>
+      <Label text="Created by" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <VBox.margin>
+            <Insets bottom="12.0" top="12.0" />
+         </VBox.margin>
+         <font>
+            <Font name="JetBrains Mono Medium Nerd Font Complete Mono" size="20.0" />
+         </font>
+      </Label>
+      <Label text="Gabriel Alexander Barrientos Hernández" textAlignment="CENTER" textFill="#d9d9d9" wrapText="true">
+         <VBox.margin>
+            <Insets top="14.0" />
+         </VBox.margin>
+         <font>
+            <Font name="JetBrains Mono Extra Bold Nerd Font Complete" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="78.0" layoutY="450.0" text="Andy Yankarlo Avelar Rodezno" textAlignment="CENTER" textFill="#d9d9d9" wrapText="true">
+         <font>
+            <Font name="JetBrains Mono Extra Bold Nerd Font Complete" size="16.0" />
+         </font>
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </Label>
+      <Label layoutX="126.0" layoutY="473.0" text="Kevin David Hernández Rivera" textAlignment="CENTER" textFill="#d9d9d9" wrapText="true">
+         <font>
+            <Font name="JetBrains Mono Extra Bold Nerd Font Complete" size="16.0" />
+         </font>
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </Label>
+      <Label layoutX="126.0" layoutY="488.0" text="Alejandro David Ramos Izaguirre" textAlignment="CENTER" textFill="#d9d9d9" wrapText="true">
+         <font>
+            <Font name="JetBrains Mono Extra Bold Nerd Font Complete" size="16.0" />
+         </font>
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </Label>
+   </VBox>
+   <VBox alignment="CENTER" prefHeight="400.0" prefWidth="400.0" style="-fx-background-color: WHITE;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+      <Label text="Choose Your Algorithm">
+         <font>
+            <Font name="JetBrains Mono Medium Medium Nerd Font Complete" size="27.0" />
+         </font>
+      </Label>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <VBox.margin>
+            <Insets bottom="10.0" left="40.0" right="40.0" top="40.0" />
+         </VBox.margin>
+         <Label contentDisplay="TOP" text="FCFS">
+            <graphic>
+               <Button alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#onOpenForm" style="-fx-background-color: #353535;" text="1" textAlignment="CENTER">
+                  <graphic>
+                     <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@img/fifo.png" />
+                     </ImageView>
+                  </graphic>
+                  <padding>
+                     <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                  </padding>
+               </Button>
+            </graphic>
+            <HBox.margin>
+               <Insets left="20.0" right="20.0" />
+            </HBox.margin>
+         </Label>
+         <Label contentDisplay="TOP" text="Round Robin" textAlignment="CENTER">
+            <graphic>
+               <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#onOpenForm" style="-fx-background-color: #353535;" text="2">
+                  <padding>
+                     <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                  </padding>
+                  <graphic>
+                     <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@img/Round_Robin.png" />
+                     </ImageView>
+                  </graphic>
+               </Button>
+            </graphic>
+            <HBox.margin>
+               <Insets left="20.0" right="20.0" />
+            </HBox.margin>
+         </Label>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="50.0" layoutY="320.0" prefHeight="100.0" prefWidth="455.0">
+         <VBox.margin>
+            <Insets left="40.0" right="40.0" top="10.0" />
+         </VBox.margin>
+         <Label contentDisplay="TOP" text="SPN">
+            <graphic>
+               <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#onOpenForm" style="-fx-background-color: #353535;" text="3" textAlignment="CENTER">
+                  <padding>
+                     <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                  </padding>
+                  <graphic>
+                     <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@img/Shortest.png" />
+                     </ImageView>
+                  </graphic>
+               </Button>
+            </graphic>
+            <HBox.margin>
+               <Insets left="20.0" right="20.0" />
+            </HBox.margin>
+         </Label>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="50.0" layoutY="169.0" prefHeight="113.0" prefWidth="455.0">
+         <VBox.margin>
+            <Insets left="40.0" right="40.0" />
+         </VBox.margin>
+         <Label contentDisplay="TOP" text="SRT">
+            <graphic>
+               <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#onOpenForm" style="-fx-background-color: #353535;" text="4">
+                  <padding>
+                     <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                  </padding>
+                  <graphic>
+                     <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@img/time.png" />
+                     </ImageView>
+                  </graphic>
+               </Button>
+            </graphic>
+            <HBox.margin>
+               <Insets left="20.0" right="20.0" top="20.0" />
+            </HBox.margin>
+         </Label>
+         <Label contentDisplay="TOP" style="-fx-background-color: FFFFFF;" text="HRRN">
+            <graphic>
+               <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#onOpenForm" style="-fx-background-color: #353535;" text="5">
+                  <padding>
+                     <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                  </padding>
+                  <graphic>
+                     <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@img/highest.png" />
+                     </ImageView>
+                  </graphic>
+               </Button>
+            </graphic>
+            <HBox.margin>
+               <Insets left="20.0" right="20.0" top="20.0" />
+            </HBox.margin>
+         </Label>
+      </HBox>
+   </VBox>
+</GridPane>
