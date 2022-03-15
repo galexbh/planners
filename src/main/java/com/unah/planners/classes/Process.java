@@ -1,5 +1,7 @@
 package classes;
 
+
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Process {
@@ -32,7 +34,9 @@ public class Process {
 
     public void timeStayFF() {this.timeStay = (this.timeFinalize-this.timeArrival);}
     
-	public void timeWaitingFF() {this.timeWaiting = ((this.timeStart==0)?this.timeArrival:this.timeStart-this.timeArrival);		}
+	public void timeWaitingFF() {
+		System.out.println(this.timeStart);
+		this.timeWaiting = ((this.timeStart==0)?this.timeArrival:this.timeStart-this.timeArrival);		}
 	
 	public void timeFinalizeFF() {this.timeFinalize = (this.timeStart + this.timeService);}
 	
@@ -134,6 +138,75 @@ public class Process {
 		this.timeNormalized = timeNormalized;
 	}
 	
+	public void timeStartJSF(ObservableList<Process> obs) {
+
+		ObservableList<Process> obs2 = FXCollections.observableArrayList();
+		for( int i = 0 ; i < obs.size() ; i++ ) {
+			obs2.add(new Process(obs.get(i).name,obs.get(i).quantun,obs.get(i).timeArrival,obs.get(i).timeService));
+//			obs2.get(i).timeStart = 250;
+		} 
+		obs.clear();
+
+		int[] timeCurrent = new int[1];
+		int[] timeShorter = new int[1];
+		int[] index = new int[1];
+		timeCurrent[0] = 0;
+		timeShorter[0] = 0;
+		index[0] = 0;
+		
+		while (obs2.size() != 0){
+			System.out.println("tamaño del observable : "+obs2.size());
+			for( int i1 = 0 ; i1 < obs2.size() ; i1++ ) {
+				if (obs2.get(i1).timeArrival == 0) {
+					obs2.get(i1).timeStart = 0;
+					System.out.println("primer if entro");
+					System.out.println("Proceso \""+obs2.get(i1).name+ "\", se ejecuto en el tiempo : "+timeCurrent[0]);
+					timeCurrent[0] = obs2.get(i1).timeService;	
+					obs.add(obs2.get(i1));
+//					obs2.remove(i1);
+					continue;
+				}
+				System.out.println("probando si pasa o no");
+				if (obs2.get(i1).timeArrival <= timeCurrent[0]) {
+					
+					if (obs2.get(i1).timeService < timeShorter[0]) {
+						timeShorter[0] = obs2.get(i1).timeService; 
+						index[0] = i1;
+						continue;
+					}
+					System.out.println("su tiempo no es menor que el de tiempo más corto actualmente ");
+					if (timeShorter[0] == 0 && obs2.get(i1).timeService >= 0 ) {
+						timeShorter[0] = obs2.get(i1).timeService; 
+						index[0] = i1;
+						continue;
+					}
+					System.out.println("su ya llego pero asaber que pedos");
+					
+				} else {
+					System.out.println("su tiempo aun no ha llegado");
+				}
+			}
+			
+			System.out.println("Proceso \""+obs2.get(index[0]).name+ "\", se ejecuto en el tiempo : "+timeCurrent[0]+"al final xd");
+			obs2.get(index[0]).timeStart = timeCurrent[0];
+			timeCurrent[0] += obs2.get(index[0]).timeService; 
+			obs.add(obs2.get(index[0]));
+			obs2.remove(index[0]);
+			timeShorter[0] = 0; 
+			index[0] = 0;
+		}
+		
+
+	}
+
+
+	@Override
+	public String toString() {
+		return "Process [name=" + name + ", quantun=" + quantun + ", estado=" + estado + ", timeArrival=" + timeArrival
+				+ ", timeService=" + timeService + ", timeStay=" + timeStay + ", timeWaiting=" + timeWaiting
+				+ ", timeStart=" + timeStart + ", timeFinalize=" + timeFinalize + ", timeNormalized=" + timeNormalized
+				+ "]";
+	}
 	
 
 
