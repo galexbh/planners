@@ -1,6 +1,6 @@
 package com.unah.planners.controller;
 
-import com.unah.planners.process.ProcessSRT;
+import com.unah.planners.process.SRTProcess;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -33,10 +33,10 @@ public class HRRNController implements Initializable {
     @FXML
     private Button applyPlannerButton;
 
-    private ObservableList<ProcessSRT> processes = FXCollections.observableArrayList();
-    private ObservableList<ProcessSRT> waitingProcesses = FXCollections.observableArrayList();
+    private ObservableList<SRTProcess> processes = FXCollections.observableArrayList();
+    private ObservableList<SRTProcess> waitingProcesses = FXCollections.observableArrayList();
 
-    private ProcessSRT runningProcess;
+    private SRTProcess runningProcess;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -57,7 +57,7 @@ public class HRRNController implements Initializable {
     @FXML
     private void addProcess() {
         proccessTable.getChildren().add(createProcess(processIdentifier.getText()));
-        ProcessSRT tempProcess = new ProcessSRT();
+        SRTProcess tempProcess = new SRTProcess();
         tempProcess.setProcessIdentifier(processIdentifier.getText());
         tempProcess.setArrivalTime(Integer.parseInt(arrivalTime.getText()) - 1);
         tempProcess.setServiceTime(Integer.parseInt(serviceTime.getText()));
@@ -147,7 +147,7 @@ public class HRRNController implements Initializable {
         processes.remove(runningProcess);
         for (int i = runningProcess.getArrivalTime(); i < quantum; i++) {
             if (!processes.isEmpty()) {
-                ProcessSRT tempProcess = checkProcessStart(i);
+                SRTProcess tempProcess = checkProcessStart(i);
                 if (tempProcess != null) {
                     if (runningProcess.getServiceTime() == 0) {
                         runningProcess = tempProcess;
@@ -185,8 +185,8 @@ public class HRRNController implements Initializable {
         }
     }
 
-    private ProcessSRT getFirtProcess() {
-        ProcessSRT firtProcessList;
+    private SRTProcess getFirtProcess() {
+        SRTProcess firtProcessList;
         int smallerNumber = processes.get(0).getArrivalTime();
         int posSmallerNumber = 0;
         for (int i = 1; i < processes.size(); i++) {
@@ -201,9 +201,9 @@ public class HRRNController implements Initializable {
 
     }
 
-    private ProcessSRT checkProcessStart(int position) {
-        ProcessSRT tempProcess = null;
-        for (ProcessSRT process : processes) {
+    private SRTProcess checkProcessStart(int position) {
+        SRTProcess tempProcess = null;
+        for (SRTProcess process : processes) {
             if (process.getArrivalTime() == position) {
                 tempProcess = process;
             }
@@ -211,8 +211,8 @@ public class HRRNController implements Initializable {
         return tempProcess;
     }
 
-    private ProcessSRT getLowerResponseRate(int position) {
-        ProcessSRT bestProcess;
+    private SRTProcess getLowerResponseRate(int position) {
+        SRTProcess bestProcess;
         double smallerNumber = (((waitingProcesses.get(0).getArrivalTime() - (double) position) + waitingProcesses.get(0).getServiceTime()) / waitingProcesses.get(0).getServiceTime());
         int posSmallerNumber = 0;
         for (int i = 1; i < waitingProcesses.size(); i++) {

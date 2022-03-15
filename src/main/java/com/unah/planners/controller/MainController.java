@@ -21,9 +21,9 @@ public class MainController {
         switch (value) {
             case 1 -> fxmlLoader = loadForm("/com/unah/planners/fifo-view.fxml");
             case 2 -> fxmlLoader = loadForm("/com/unah/planners/round-robin-view.fxml");
-            case 3 -> fxmlLoader = loadForm("/com/unah/planners/JSF-view.fxml");
-            case 4 -> fxmlLoader = loadForm("/com/unah/planners/SRT-view.fxml");
-            case 5 -> fxmlLoader = loadForm("/com/unah/planners/HRRN-view.fxml");
+            case 3 -> fxmlLoader = loadForm("/com/unah/planners/jsf-view.fxml");
+            case 4 -> fxmlLoader = loadForm("/com/unah/planners/srt-view.fxml");
+            case 5 -> fxmlLoader = loadForm("/com/unah/planners/hrrn-view.fxml");
         }
 
         Parent root = fxmlLoader.load();

@@ -1,6 +1,6 @@
 package com.unah.planners.process;
 
-public class ProcessSRT {
+public class SRTProcess {
     private String processIdentifier;
     private int arrivalTime;
     private int serviceTime;

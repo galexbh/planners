@@ -1,6 +1,6 @@
 package com.unah.planners.controller;
 
-import com.unah.planners.process.ProcessSRT;
+import com.unah.planners.process.SRTProcess;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -31,9 +31,9 @@ public class SRTController implements Initializable {
     @FXML
     private Button applyPlannerButton;
 
-    private ObservableList<ProcessSRT> processes = FXCollections.observableArrayList();
-    private ObservableList<ProcessSRT> waitingProcesses = FXCollections.observableArrayList();
-    private ProcessSRT runningProcess;
+    private ObservableList<SRTProcess> processes = FXCollections.observableArrayList();
+    private ObservableList<SRTProcess> waitingProcesses = FXCollections.observableArrayList();
+    private SRTProcess runningProcess;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -54,7 +54,7 @@ public class SRTController implements Initializable {
     @FXML
     private void addProcess() {
         proccessTable.getChildren().add(createProcess(processIdentifierObtained.getText()));
-        ProcessSRT tempProcess = new ProcessSRT();
+        SRTProcess tempProcess = new SRTProcess();
         tempProcess.setProcessIdentifier(processIdentifierObtained.getText());
         tempProcess.setArrivalTime(Integer.parseInt(arrivalTimeObtained.getText()) - 1);
         tempProcess.setServiceTime(Integer.parseInt(serviceTimeObtained.getText()));
@@ -141,7 +141,7 @@ public class SRTController implements Initializable {
     @FXML
     private void applyPlanner() {
 
-        ObservableList<ProcessSRT> firtProcessList = getFirtProcess();
+        ObservableList<SRTProcess> firtProcessList = getFirtProcess();
         if (firtProcessList.size() == 1) {
             runningProcess = firtProcessList.get(0);
         } else {
@@ -151,7 +151,7 @@ public class SRTController implements Initializable {
         processes.remove(runningProcess);
         for (int i = runningProcess.getArrivalTime(); i < quantum; i++) {
             if (!processes.isEmpty()) {
-                ProcessSRT tempProcess = checkProcessStart(i);
+                SRTProcess tempProcess = checkProcessStart(i);
                 if (tempProcess != null) {
                     if (runningProcess.getServiceTime() == 0) {
                         runningProcess = tempProcess;
@@ -189,8 +189,8 @@ public class SRTController implements Initializable {
 
     }
 
-    private ObservableList<ProcessSRT> getFirtProcess() {
-        ObservableList<ProcessSRT> firtProcessList = FXCollections.observableArrayList();
+    private ObservableList<SRTProcess> getFirtProcess() {
+        ObservableList<SRTProcess> firtProcessList = FXCollections.observableArrayList();
         int smallerNumber = processes.get(0).getArrivalTime();
         int posSmallerNumber = 0;
         for (int i = 1; i < processes.size(); i++) {
@@ -214,9 +214,9 @@ public class SRTController implements Initializable {
 
     }
 
-    private ProcessSRT compareServiceTime(ObservableList<ProcessSRT> processToCompare) {
+    private SRTProcess compareServiceTime(ObservableList<SRTProcess> processToCompare) {
 
-        ProcessSRT shorterProcess = processes.get(processToCompare.get(0).getPosition());
+        SRTProcess shorterProcess = processes.get(processToCompare.get(0).getPosition());
         for (int i = 1; i < processToCompare.size(); i++) {
             if (processes.get(processToCompare.get(i).getPosition()).getServiceTime() < shorterProcess.getServiceTime()) {
                 shorterProcess = processes.get(processToCompare.get(i).getPosition());
@@ -226,9 +226,9 @@ public class SRTController implements Initializable {
 
     }
 
-    private ProcessSRT checkProcessStart(int position) {
-        ProcessSRT tempProcess = null;
-        for (ProcessSRT process : processes) {
+    private SRTProcess checkProcessStart(int position) {
+        SRTProcess tempProcess = null;
+        for (SRTProcess process : processes) {
             if (process.getArrivalTime() == position) {
                 tempProcess = process;
             }
@@ -242,7 +242,7 @@ public class SRTController implements Initializable {
             for (int i = 0; i < waitingProcesses.size(); i++) {
                 for (int j = 0; j < waitingProcesses.size(); j++) {
                     if (waitingProcesses.get(i).getServiceTime() < waitingProcesses.get(j).getServiceTime()) {
-                        ProcessSRT tmpProcess = waitingProcesses.get(i);
+                        SRTProcess tmpProcess = waitingProcesses.get(i);
                         waitingProcesses.set(i, waitingProcesses.get(j));
                         waitingProcesses.set(j, tmpProcess);
 
