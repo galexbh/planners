@@ -1,4 +1,4 @@
-package com.unah.planners.classes;
+package com.unah.planners.process;
 
 public class ProcessSRT {
     private String processIdentifier;
@@ -14,7 +14,6 @@ public class ProcessSRT {
     public void setPosition(int position) {
         this.positionInTable = position;
     }
-
 
 
     public String getProcessIdentifier() {
@@ -40,7 +39,6 @@ public class ProcessSRT {
     public void setServiceTime(int serviceTime) {
         this.serviceTime = serviceTime;
     }
-
 
 
 }

@@ -1,32 +1,29 @@
 package com.unah.planners.controller;
 
-import com.unah.planners.classes.ProcessSRT;
+import com.unah.planners.process.ProcessSRT;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class HRRNView implements Initializable {
+public class SRTController implements Initializable {
     int quantum = 20;
     @FXML
     private Pane proccessTable;
     @FXML
-    private TextField processIdentifier;
+    private TextField processIdentifierObtained;
     @FXML
-    private TextField arrivalTime;
+    private TextField arrivalTimeObtained;
     @FXML
-    private TextField serviceTime;
+    private TextField serviceTimeObtained;
     @FXML
     private Pane namesPane;
     @FXML
@@ -36,7 +33,6 @@ public class HRRNView implements Initializable {
 
     private ObservableList<ProcessSRT> processes = FXCollections.observableArrayList();
     private ObservableList<ProcessSRT> waitingProcesses = FXCollections.observableArrayList();
-
     private ProcessSRT runningProcess;
 
     @Override
@@ -57,11 +53,11 @@ public class HRRNView implements Initializable {
 
     @FXML
     private void addProcess() {
-        proccessTable.getChildren().add(createProcess(processIdentifier.getText()));
+        proccessTable.getChildren().add(createProcess(processIdentifierObtained.getText()));
         ProcessSRT tempProcess = new ProcessSRT();
-        tempProcess.setProcessIdentifier(processIdentifier.getText());
-        tempProcess.setArrivalTime(Integer.parseInt(arrivalTime.getText()) - 1);
-        tempProcess.setServiceTime(Integer.parseInt(serviceTime.getText()));
+        tempProcess.setProcessIdentifier(processIdentifierObtained.getText());
+        tempProcess.setArrivalTime(Integer.parseInt(arrivalTimeObtained.getText()) - 1);
+        tempProcess.setServiceTime(Integer.parseInt(serviceTimeObtained.getText()));
         tempProcess.setPosition(processes.size());
         processes.add(tempProcess);
 
@@ -71,9 +67,9 @@ public class HRRNView implements Initializable {
             applyPlannerButton.setDisable(false);
 
         }
-        processIdentifier.setText("");
-        arrivalTime.setText("");
-        serviceTime.setText("");
+        processIdentifierObtained.setText("");
+        arrivalTimeObtained.setText("");
+        serviceTimeObtained.setText("");
     }
 
 
@@ -136,28 +132,40 @@ public class HRRNView implements Initializable {
         columnNumbers.setVisible(false);
         applyPlannerButton.setDisable(true);
         processes = FXCollections.observableArrayList();
-        processIdentifier.setText("");
-        arrivalTime.setText("");
-        serviceTime.setText("");
+        processIdentifierObtained.setText("");
+        arrivalTimeObtained.setText("");
+        serviceTimeObtained.setText("");
     }
-    @FXML
-    private void applyPlanner(){
 
-        runningProcess = getFirtProcess();
+    // Color = Color.LIGHTGREEN
+    @FXML
+    private void applyPlanner() {
+
+        ObservableList<ProcessSRT> firtProcessList = getFirtProcess();
+        if (firtProcessList.size() == 1) {
+            runningProcess = firtProcessList.get(0);
+        } else {
+            runningProcess = compareServiceTime(firtProcessList);
+
+        }
         processes.remove(runningProcess);
-        for (int i = runningProcess.getArrivalTime(); i < quantum; i++){
-            if (!processes.isEmpty()){
+        for (int i = runningProcess.getArrivalTime(); i < quantum; i++) {
+            if (!processes.isEmpty()) {
                 ProcessSRT tempProcess = checkProcessStart(i);
-                if (tempProcess != null){
-                    if (runningProcess.getServiceTime() == 0){
+                if (tempProcess != null) {
+                    if (runningProcess.getServiceTime() == 0) {
+                        runningProcess = tempProcess;
+                    } else if (tempProcess.getServiceTime() < runningProcess.getServiceTime()) {
+                        waitingProcesses.add(runningProcess);
                         runningProcess = tempProcess;
                     } else {
                         waitingProcesses.add(tempProcess);
+
                     }
                     processes.remove(tempProcess);
+
                 }
             }
-
             Pane tempPane;
             if (runningProcess.getServiceTime() != 0) {
                 tempPane = (Pane) proccessTable.getChildren().get(runningProcess.getPosition());
@@ -165,15 +173,9 @@ public class HRRNView implements Initializable {
                 tempTriangle.setFill(Color.LIGHTGREEN);
                 tempTriangle.setStroke(Color.WHITE);
                 runningProcess.setServiceTime(runningProcess.getServiceTime() - 1);
-            } else{
-                if (!waitingProcesses.isEmpty()){
-                    if (waitingProcesses.size() == 1){
-                        runningProcess = waitingProcesses.get(0);
-                        waitingProcesses.remove(runningProcess);
-                    } else {
-                        runningProcess = getLowerResponseRate(i);
-                    }
-
+            } else {
+                if (!waitingProcesses.isEmpty()) {
+                    runningProcess = waitingProcesses.get(0);
                     tempPane = (Pane) proccessTable.getChildren().get(runningProcess.getPosition());
                     waitingProcesses.remove(runningProcess);
                     Rectangle tempTriangle = (Rectangle) tempPane.getChildren().get(i);
@@ -182,11 +184,13 @@ public class HRRNView implements Initializable {
                     runningProcess.setServiceTime(runningProcess.getServiceTime() - 1);
                 }
             }
+            orderProcesses();
         }
+
     }
 
-    private ProcessSRT getFirtProcess() {
-        ProcessSRT firtProcessList;
+    private ObservableList<ProcessSRT> getFirtProcess() {
+        ObservableList<ProcessSRT> firtProcessList = FXCollections.observableArrayList();
         int smallerNumber = processes.get(0).getArrivalTime();
         int posSmallerNumber = 0;
         for (int i = 1; i < processes.size(); i++) {
@@ -196,12 +200,33 @@ public class HRRNView implements Initializable {
                 posSmallerNumber = i;
             }
         }
-        firtProcessList = processes.get(posSmallerNumber);
+        firtProcessList.add(processes.get(posSmallerNumber));
+        for (int i = 0; i < processes.size(); i++) {
+            if (i == posSmallerNumber) {
+                continue;
+            }
+            if (processes.get(posSmallerNumber).getArrivalTime() == processes.get(i).getArrivalTime()) {
+                firtProcessList.add(processes.get(i));
+            }
+
+        }
         return firtProcessList;
 
     }
 
-    private ProcessSRT checkProcessStart(int position){
+    private ProcessSRT compareServiceTime(ObservableList<ProcessSRT> processToCompare) {
+
+        ProcessSRT shorterProcess = processes.get(processToCompare.get(0).getPosition());
+        for (int i = 1; i < processToCompare.size(); i++) {
+            if (processes.get(processToCompare.get(i).getPosition()).getServiceTime() < shorterProcess.getServiceTime()) {
+                shorterProcess = processes.get(processToCompare.get(i).getPosition());
+            }
+        }
+        return shorterProcess;
+
+    }
+
+    private ProcessSRT checkProcessStart(int position) {
         ProcessSRT tempProcess = null;
         for (ProcessSRT process : processes) {
             if (process.getArrivalTime() == position) {
@@ -210,19 +235,24 @@ public class HRRNView implements Initializable {
         }
         return tempProcess;
     }
-    private ProcessSRT getLowerResponseRate(int position){
-        ProcessSRT bestProcess;
-        double smallerNumber = (((waitingProcesses.get(0).getArrivalTime() - (double)position) + waitingProcesses.get(0).getServiceTime())/waitingProcesses.get(0).getServiceTime());
-        int posSmallerNumber = 0;
-        for (int i = 1; i < waitingProcesses.size(); i++) {
 
-            if ( (((waitingProcesses.get(i).getArrivalTime() - (double)position) + waitingProcesses.get(i).getServiceTime())/waitingProcesses.get(i).getServiceTime()) < smallerNumber) {
-                smallerNumber = (((waitingProcesses.get(i).getArrivalTime() - (double) position) + waitingProcesses.get(i).getServiceTime())/waitingProcesses.get(i).getServiceTime());
-                posSmallerNumber = i;
+    private void orderProcesses() {
+
+        if (waitingProcesses.size() > 1) {
+            for (int i = 0; i < waitingProcesses.size(); i++) {
+                for (int j = 0; j < waitingProcesses.size(); j++) {
+                    if (waitingProcesses.get(i).getServiceTime() < waitingProcesses.get(j).getServiceTime()) {
+                        ProcessSRT tmpProcess = waitingProcesses.get(i);
+                        waitingProcesses.set(i, waitingProcesses.get(j));
+                        waitingProcesses.set(j, tmpProcess);
+
+                    }
+                }
             }
         }
-        bestProcess = waitingProcesses.get(posSmallerNumber);
-        return bestProcess;
     }
 
+
 }
+
+

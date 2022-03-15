@@ -1,4 +1,4 @@
-package com.unah.planners.classes;
+package com.unah.planners.process;
 
 
 import javafx.collections.FXCollections;
@@ -27,10 +27,6 @@ public class Process {
                 this.timeArrival = timeArrival;
                 this.timeService = timeService;
             }
-    
-//    public float timeFinalize() {return this.timeFinalize = this.timeStart + this.timeService;}
-    
-//    public Integer timeStay() {return this.timeStay = this.timeWaiting+ this.timeService;}
 
     public void timeStayFF() {this.timeStay = (this.timeFinalize-this.timeArrival);}
     
@@ -41,22 +37,6 @@ public class Process {
 	public void timeFinalizeFF() {this.timeFinalize = (this.timeStart + this.timeService);}
 	
 	public void timeNormalizedFF() {this.timeNormalized = ((float)(this.timeWaiting)/(float)(this.timeService));}
-	
-	public void timeStartFF(ObservableList<Process> obs) {
-		int[] acumulador = new int[1];
-		acumulador[0] = 0;
-		for(Process proceso: obs) {
-			if(proceso.name == this.name) {
-				break;
-			}
-			if(proceso.name == obs.get(obs.size()-1).name) {
-				break;
-			}
-			acumulador[0] += proceso.timeService;		
-		}
-		this.timeStart = acumulador[0];
-
-	}
 
 	public String getName() {
 		return name;
@@ -141,21 +121,17 @@ public class Process {
 	public void timeStartJSF(ObservableList<Process> obs) {
 
 		ObservableList<Process> obs2 = FXCollections.observableArrayList();
-		for( int i = 0 ; i < obs.size() ; i++ ) {
-			obs2.add(new Process(obs.get(i).name,obs.get(i).quantun,obs.get(i).timeArrival,obs.get(i).timeService));
-//			obs2.get(i).timeStart = 250;
+		for (Process ob : obs) {
+			obs2.add(new Process(ob.name, ob.quantun, ob.timeArrival, ob.timeService));
 		} 
 		obs.clear();
 
 		int[] timeCurrent = new int[1];
 		int[] timeShorter = new int[1];
 		int[] index = new int[1];
-		timeCurrent[0] = 0;
-		timeShorter[0] = 0;
-		index[0] = 0;
-		
+
 		while (obs2.size() != 0){
-			System.out.println("tama�o del observable : "+obs2.size());
+			System.out.println("tamanio del observable : "+obs2.size());
 			for( int i1 = 0 ; i1 < obs2.size() ; i1++ ) {
 				if (obs2.get(i1).timeArrival == 0) {
 					obs2.get(i1).timeStart = 0;
@@ -163,7 +139,7 @@ public class Process {
 					System.out.println("Proceso \""+obs2.get(i1).name+ "\", se ejecuto en el tiempo : "+timeCurrent[0]);
 					timeCurrent[0] = obs2.get(i1).timeService;	
 					obs.add(obs2.get(i1));
-//					obs2.remove(i1);
+
 					continue;
 				}
 				System.out.println("probando si pasa o no");

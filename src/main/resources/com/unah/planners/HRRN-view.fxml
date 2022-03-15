@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #bfdbf7;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.planners.controller.HRRNView">
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #bfdbf7;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.planners.controller.HRRNController">
    <children>
       <Label alignment="CENTER" layoutX="255.0" layoutY="33.0" prefHeight="35.0" prefWidth="449.0" text="Hightest response ratio next (HRRN)">
          <font>

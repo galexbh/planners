@@ -3,7 +3,7 @@ package com.unah.planners.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.unah.planners.classes.Process;
+import com.unah.planners.process.Process;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,7 +17,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class ViewJSFController implements Initializable {
+public class JSFController implements Initializable {
 
 	@FXML private TableColumn<Process, String> name;	
 	@FXML private TableColumn<Process, Number> timeArrival;	
